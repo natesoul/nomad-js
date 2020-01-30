@@ -1,11 +1,16 @@
 // <⚠️ DONT DELETE THIS ⚠️>
-import "./styles.css";
+// import "./styles.css";
 // <⚠️ /DONT DELETE THIS ⚠️>
 
+const colors = ["#ffffff", "#FF00FF", "#FFD700", "#00BFFF"];
 
-const fontColor = "#ffffff";
 
 
 title = document.querySelector(".title");
+body = document.querySelector("body");
 
-console.log("title");
+
+body.style.backgroundColor = colors[1];
+title.style.color = colors[0];
+
+console.log(body);
