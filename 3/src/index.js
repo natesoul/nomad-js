@@ -22,19 +22,6 @@ function getTime() {
   const realDays = parseInt(dday / (60*60*24*1000));
 
   clockTitle.innerText = `${realDays}d ${realHours < 10 ? `0${realHours}` : realHours}h ${realMinutes < 10 ? `0${realMinutes}` : realMinutes}m ${realSeconds < 10 ? `0${realSeconds}` : realSeconds}s`;
-
-  console.log(date);
-  console.log(xmasDay);
-  console.log(dday);
-  console.log(seconds);
-  console.log(minutes);
-  console.log(hours);
-  console.log(days);
-
-  console.log("Second: ", parseInt(realSeconds));
-  console.log("Minute: ", parseInt(realMinutes));
-  console.log("Hours: ", parseInt(realHours));
-  console.log("Days: ", parseInt(realDays));
 }
 
 function init() {
