@@ -3,6 +3,7 @@
 // <⚠️ /DONT DELETE THIS ⚠️>
 
 const myCountry = document.querySelector(".myCountry");
+const country_LS = "Country";
 
 function select(event) {
     event.preventDefault();
@@ -15,16 +16,22 @@ function saveCountry(text) {
     localStorage.setItem("Country", text);
 }
 
-// function askForCountry() {
-//     myCountry.addEventListener("onselect", select);
-// }
-
 function askForCountry(){
+    const currentValue = localStorage.getItem(country_LS);
+    if (currentValue === null){ 
+        myCountry.addEventListener("change", select);
+    } else {
+    loadCountry();
+    }
+}
+
+function loadCountry() {
+    const currentValue = localStorage.getItem(country_LS);
+    document.querySelector(".myCountry").value = currentValue;
     myCountry.addEventListener("change", select);
 }
 
 function init() {
-    
     askForCountry();
 }
 
