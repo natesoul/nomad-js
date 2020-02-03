@@ -19,9 +19,6 @@ function saveTask(){
 
 function delTask(event) {
     const btn = event.target;
-    console.log(event);
-    console.log(event.target.parentNode.parentNode);
-    // console.log(event.target.previousSibling.innerText);
     const li = btn.parentNode;
     pendingList.removeChild(li);
     
@@ -38,11 +35,11 @@ function checkTask(event){
     const pLi = pBtn.parentNode;
     const pLi_text = pBtn.previousSibling.previousSibling.innerText;
     
-    li = document.createElement("li");
-    span = document.createElement("span");
-    delBtn = document.createElement("button");
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    const delBtn = document.createElement("button");
     delBtn.addEventListener("click", delFinished);
-    backBtn = document.createElement("button");
+    const backBtn = document.createElement("button");
     backBtn.addEventListener("click", taskReturn);
     
     span.innerText = pLi_text;
@@ -66,16 +63,14 @@ function checkTask(event){
     };
     finishList.push(taskObj);
     saveTask();
-
-
 }
 
 function paintPending(text){
     const newId = pendList.length+1;
-    li = document.createElement("li");
-    span = document.createElement("span");
-    delBtn = document.createElement("button");
-    checkBtn = document.createElement("button");
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    const delBtn = document.createElement("button");
+    const checkBtn = document.createElement("button");
     span.innerText = text;
     delBtn.innerHTML = "❌";
     delBtn.addEventListener("click", delTask);
@@ -92,16 +87,11 @@ function paintPending(text){
         text : text
     };
     pendList.push(taskObj);
-    // console.log(taskList);
     saveTask();
-
 }
 
 function delFinished(event){
     const btn = event.target;
-    // console.log(event);
-    // console.log(event.target.parentNode.parentNode);
-    // console.log(event.target.previousSibling.innerText);
     const li = btn.parentNode;
     finishedList.removeChild(li);
     
@@ -113,44 +103,28 @@ function delFinished(event){
     saveTask();
 }
 
-function taskReturn(){
-    const btn = event.target;
-    console.log(event);
-    console.log(event.target.parentNode.parentNode);
-    // console.log(event.target.previousSibling.innerText);
-    const li = btn.parentNode;
-    pendingList.removeChild(li);
-    
-    const cleanPendingList = pendList.filter(function(tasks){
-        return tasks.id !== parseInt(li.id);
-    });
-    pendList = cleanPendingList;
-    saveTask();
-}
-
 function taskReturn(event){
     const newId = finishList.length;
     const pBtn = event.target;
     const pLi = pBtn.parentNode;
     const pLi_text = pBtn.previousSibling.previousSibling.innerText;
     
-    li = document.createElement("li");
-    span = document.createElement("span");
-    delBtn = document.createElement("button");
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    const delBtn = document.createElement("button");
     delBtn.addEventListener("click", delTask);
-    backBtn = document.createElement("button");
+    const backBtn = document.createElement("button");
     backBtn.addEventListener("click", checkTask);
     
     span.innerText = pLi_text;
     delBtn.innerText ="❌";
     backBtn.innerText ="✅";
-
     li.id = newId;
     li.appendChild (span);
     li.appendChild (delBtn);
     li.appendChild (backBtn);
-    pendingList.appendChild(li);
 
+    pendingList.appendChild(li);
     finishedList.removeChild(pLi);
 
     const cleanFinishingList = finishList.filter(function(tasks){
@@ -167,10 +141,10 @@ function taskReturn(event){
 
 function paintFinishing(text){
     const newId = finishList.length+1;
-    li = document.createElement("li");
-    span = document.createElement("span");
-    delBtn = document.createElement("button");
-    backBtn = document.createElement("button");
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    const delBtn = document.createElement("button");
+    const backBtn = document.createElement("button");
     span.innerText = text;
     delBtn.innerHTML = "❌";
     delBtn.addEventListener("click", delFinished);
@@ -187,31 +161,26 @@ function paintFinishing(text){
         text : text
     };
     finishList.push(taskObj);
-    // console.log(taskList);
     saveTask();
 }
 
 function handlSubmit(event) {
-    currentValue = taskInput.value;
+    const currentValue = taskInput.value;
     paintPending(currentValue);
     taskInput.value = "";
 }
 
 function loadTask(){
-    loadedTask = localStorage.getItem(pending_LS);
-    loadedFTask = localStorage.getItem(finished_LS);
-    // console.log(loadedTask);
+    const loadedTask = localStorage.getItem(pending_LS);
+    const loadedFTask = localStorage.getItem(finished_LS);
     if (loadedTask !== null) {
-        parseTask = JSON.parse(loadedTask);
-        console.log(parseTask);
+        const parseTask = JSON.parse(loadedTask);
         parseTask.forEach(function(tasks){
             paintPending(tasks.text);
         })
     }
-
     if (loadedFTask !== null) {
-        parseFTask = JSON.parse(loadedFTask);
-        console.log(parseFTask);
+        const parseFTask = JSON.parse(loadedFTask);
         parseFTask.forEach(function(tasks){
             paintFinishing(tasks.text);
         })
