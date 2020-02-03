@@ -27,7 +27,7 @@ function askForCountry(){
 
 function loadCountry() {
     const currentValue = localStorage.getItem(country_LS);
-    document.querySelector(".myCountry").value = currentValue;
+    myCountry.value = currentValue;
     myCountry.addEventListener("change", select);
 }
 
