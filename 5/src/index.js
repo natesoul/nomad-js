@@ -5,20 +5,22 @@
 const taskForm = document.querySelector(".js-taskForm");
 const taskInput = taskForm.querySelector("input");
 const pendingList = document.querySelector(".js-pendingList");
-const finishedList = document.querySelector("js-finishedList");
+const finishedList = document.querySelector(".js-finishedList");
 
 const task_LS = "PENDING";
 const finished_LS = "FINISHED";
 let taskList = [];
-let finishedList = [];
+let finishList = [];
 
 function saveTask(){
     localStorage.setItem(task_LS, JSON.stringify(taskList));
-    localStorage.setItem(finished_LS, JSON.stringify(finished_LS));
+    localStorage.setItem(finished_LS, JSON.stringify(finishList));
 }
 
 function delTask(event) {
     const btn = event.target;
+    // console.log(event);
+    // console.log(event.target.previousSibling.innerText);
     const li = btn.parentNode;
     pendingList.removeChild(li);
     
@@ -30,30 +32,52 @@ function delTask(event) {
 }
 
 function checkTask(event){
-    const newId = taskList.length+1;
-    const btn = event.target;
-    const li = btn.parentNode;
+    const newId = finishList.length+1;
+    const pBtn = event.target;
+    const pLi = pBtn.parentNode;
+    const pLi_text = pBtn.previousSibling.previousSibling.innerText;
+    
+    li = document.createElement("li");
+    span = document.createElement("span");
+    delBtn = document.createElement("button");
+    backBtn = document.createElement("button");
+    backBtn.addEventListener
+    
+    span.innerText = pLi_text;
+    delBtn.innerText ="❌";
+    backBtn.innerText ="◀️";
+    li.id = newId;
+    li.appendChild (span);
+    li.appendChild (delBtn);
+    li.appendChild (backBtn);
     finishedList.appendChild(li);
-    pendingList.removeChild(li);
+
+    pendingList.removeChild(pLi);
+
     const cleanPendingList = taskList.filter(function(tasks){
         return tasks.id !== parseInt(li.id);
     });
     taskList = cleanPendingList;
+    const taskObj = {
+        id : newId ,
+        text : pLi_text
+    };
+    finishList.push(taskObj);
     saveTask();
 
 
 }
 
-function paintPeding(text){
+function paintPending(text){
     const newId = taskList.length+1;
     li = document.createElement("li");
     span = document.createElement("span");
     delBtn = document.createElement("button");
     checkBtn = document.createElement("button");
     span.innerText = text;
-    delBtn.innerText = "X";
+    delBtn.innerHTML = "❌";
     delBtn.addEventListener("click", delTask);
-    checkBtn.innerText = "V";
+    checkBtn.innerText = "✅";
     checkBtn.addEventListener("click", checkTask);
     li.id = newId;
     li.appendChild (span);
@@ -71,20 +95,55 @@ function paintPeding(text){
 
 }
 
+function paintFinishing(text){
+    const newId = taskList.length+1;
+    li = document.createElement("li");
+    span = document.createElement("span");
+    delBtn = document.createElement("button");
+    backBtn = document.createElement("button");
+    span.innerText = text;
+    delBtn.innerHTML = "❌";
+    delBtn.addEventListener("click", delTask);
+    backBtn.innerText ="◀️";
+    // backBtn.addEventListener("click", );
+    li.id = newId;
+    li.appendChild (span);
+    li.appendChild (delBtn);
+    li.appendChild (backBtn);
+    finishedList.appendChild(li);
+
+    const taskObj = {
+        id : newId ,
+        text : text
+    };
+    finishList.push(taskObj);
+    // console.log(taskList);
+    saveTask();
+}
+
 function handlSubmit(event) {
     currentValue = taskInput.value;
-    paintPeding(currentValue);
+    paintPending(currentValue);
     taskInput.value = "";
 }
 
 function loadTask(){
     loadedTask = localStorage.getItem(task_LS);
+    loadedFTask = localStorage.getItem(finished_LS);
     // console.log(loadedTask);
     if (loadedTask !== null) {
         parseTask = JSON.parse(loadedTask);
         console.log(parseTask);
         parseTask.forEach(function(tasks){
-            paintPeding(tasks.text);
+            paintPending(tasks.text);
+        })
+    }
+
+    if (loadedFTask !== null) {
+        parseFTask = JSON.parse(loadedFTask);
+        console.log(parseFTask);
+        parseFTask.forEach(function(tasks){
+            paintFinishing(tasks.text);
         })
     }
 }
