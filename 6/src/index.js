@@ -9,35 +9,41 @@ const formGuessInput = formGuess.querySelector("input");
 const formGuess2 = document.querySelector(".js-formGuess2");
 const play = formGuess2.querySelector("input");
 const generate = document.querySelector(".generate");
+const gameResult = document.querySelector(".js-result");
+const gameResult2 = document.querySelector(".js-result2");
 
-// console.log(fNumber.value);
+function result(event){
+    event.preventDefault();
+    randomNumber();
+}
+
 function playGame(number){
     const userNumber = formGuessInput.value;
-    console.log(userNumber, number);
-
+    gameResult.innerText = `You chose : ${userNumber} , the machine chose : ${number}.`
+    if (userNumber == number){gameResult2.innerText = "You won!"
+    } else {
+        gameResult2.innerText = "You lost!"
+    }  
 }
+
+
 
 function paintNumber (){
     const number = fNumber.value;
     
     const value = `Generate a number between 0 to ${number}`;
     generate.innerText = value;
-    console.log(value);
-    console.log(number);
 }
 
 function randomNumber() {
-    const number = Math.floor(Math.random() * fNumber.value);
-    console.log(fNumber.value);
-    console.log(number);
+    const rNumber = Math.floor(Math.random() * fNumber.value);
     paintNumber();
-    playGame(number);
+    playGame(rNumber);
 }
 
 function init(){
-    fNumber.addEventListener("input", randomNumber);
-    // play.addEventListener("submit", playGame);
-    
+    fNumber.addEventListener("input", paintNumber);
+    play.addEventListener("click", result);
 }
 
 init();
