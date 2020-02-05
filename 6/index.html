@@ -6,6 +6,18 @@
   </head>
 
   <body>
+    <h1>Random Number Game</h1> 
+    <h3 class="generate">Generate a number between 0 to 200</h3>
+    <form class="js-formNumber">
+        <input type="range" min="0" max="200" />
+    </form>
+    <form class="js-formGuess">Guess the number : 
+        <input type="number" min="0" max="200" />
+    </form>
+    <form class="js-formGuess2">
+        <input type="submit" value="Play!" />
+    </form>
+    <div class="js-result"></div>
     <script src="src/index.js"></script>
   </body>
 </html>
