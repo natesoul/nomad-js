@@ -8,105 +8,83 @@ let cal2 ="";
 const body = document.querySelector("body");
 const result = document.querySelector(".result");
 let resultDisplay = result.innerText;
-console.log(resultDisplay);
-// const c = "+";
-// const d = 3 ${c} 4;
-
-function plus() {
-    inputNumber = Number (cal);
-    total = total + inputNumber;
-    cal ="";
-    result.innerText = String(total);
-    body.addEventListener("click", input);
-}
-
-function minus() {
-    inputNumber = Number (cal);
-    // inputNumber2 = Number (cal2);
-    total = inputNumber;
-    cal ="";
-    result.innerText = String(total);
-    body.addEventListener("click", input);
-}
-
-function calculate(content){
-    console.log("calculating");
-    if (content == "C") {
-        cal="";
-        result.innerText = cal;
-        total = 0;
-    } else if (content == "+") {
-        plus();
-    } else if (content == "-") {
-        if (total == 0) {
-            inputNumber = Number (cal);
-            total = inputNumber;
-            cal ="";
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-        } else {
-            console.log(total);
-            inputNumber = Number (cal);
-            total = total - inputNumber;
-            cal ="";
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-        }
-    } else if (content == "*") {
-        if (total == 0) {
-            inputNumber = Number (cal);
-            total = inputNumber;
-            cal ="";
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-        } else {
-            console.log(total);
-            inputNumber = Number (cal);
-            total = total * inputNumber;
-            cal ="";
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-        }
-    } else if (content == "/") {
-        if (total == 0) {
-            inputNumber = Number (cal);
-            total = inputNumber;
-            cal ="";
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-        } else {
-            console.log(total);
-            inputNumber = Number (cal);
-            total = total / inputNumber;
-            cal ="";
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-        }
-    } else if (content == "=") {
-            result.innerText = String(total);
-            body.addEventListener("click", input);
-    }
-}
+let calculators = "";
 
 function input (event) {
-    // console.log (event.target);
-    // console.log (event.target.innerText);
     const content = event.target.innerText;
     if (content.length < 3 ) {
-       if (content =="+" || content =="-" || 
-       content =="*" || content =="/" || content =="=" 
-       || content =="C"  ) {
-           calculate(content);
-       } else{
+        if (content == "C") { 
+            cal ="";
+            cal2="";
+            calculators="";
+            total = 0;
+            result.innerText = cal;        
+        } else if (content == "=") {
+            console.log("=");
+            console.log(calculators);
+            calculation();
+
+        } else if (content =="+" || content =="-" || 
+       content =="*" || content =="/") {
+            if (cal2 !== "" && cal == !"") {
+                calculators = content;
+                console.log(cal2, calculators);
+                calculation(); 
+                calculators = content;       
+            } else if (cal2 !== "" && cal == "") {
+                calculators = content;
+                cal = cal2;
+                console.log(cal2, calculators);
+         
+                calculators = content;
+            
+            } else {
+                calculators = content;
+                console.log(calculators);
+                cal2 = cal;
+                cal = "";
+            }
+        }
+        else {
             const sContent = String(content);
             console.log(sContent);
             cal = cal + sContent;
-            // console.log(cal);
             result.innerText = cal;
-            // console.log(resultDisplay);
        }
     }
+}
 
+
+
+function calculation () {
+    console.log(calculators);
+    console.log("cal2", cal2, "cal", cal);
+    switch (calculators) {
+        
+        case "+":
+            total = Number(cal2) + Number(cal);
+            resultNumber();
+            break;
+        case "-":
+            total = Number(cal2) - Number(cal);
+            resultNumber();
+            break;
+        case "*":
+            total = Number(cal2) * Number(cal);
+            resultNumber();
+            break;
+        case "/":
+            total = Number(cal2) / Number(cal);
+            resultNumber();
+            break;
+    }
+}
+
+function resultNumber() {
+    cal2 =String(total);
+    result.innerText = String(total);
+    calculators = "";
+    cal ="";
 }
 
 function init() {
