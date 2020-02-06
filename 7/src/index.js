@@ -3,6 +3,7 @@
 // <⚠️ /DONT DELETE THIS ⚠️>
 
 let total = 0;
+let midTotal = 0;
 let cal ="";
 let cal2 ="";
 const body = document.querySelector("body");
@@ -23,20 +24,20 @@ function input (event) {
             console.log("=");
             console.log(calculators);
             calculation();
+            cal2="";
 
         } else if (content =="+" || content =="-" || 
-       content =="*" || content =="/") {
-            if (cal2 !== "" && cal == !"") {
-                calculators = content;
+        content =="*" || content =="/") {
+            if (cal2 !== "") {
                 console.log(cal2, calculators);
                 calculation(); 
                 calculators = content;       
-            } else if (cal2 !== "" && cal == "") {
+            } else if (cal2 == "") {
                 calculators = content;
-                cal = cal2;
+                cal2 = cal;
+                cal ="";
                 console.log(cal2, calculators);
          
-                calculators = content;
             
             } else {
                 calculators = content;
